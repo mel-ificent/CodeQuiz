@@ -47,6 +47,7 @@ function timer(){
 function renderQuiz(){
 
     headerEl.textContent=Questions[questionNumber];
+    questionNumber++;
 
     for(i=0; i<4; i++){
         var answerChoice = Choices[choiceNumber];
