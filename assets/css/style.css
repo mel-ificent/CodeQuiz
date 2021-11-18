@@ -56,7 +56,7 @@ justify-content:space-between;
 
 
 /*General button styling for all buttons throughout the quiz*/
-.button{
+.startbutton, .button{
 padding: 5px;
 cursor: pointer;
 font-size: 16px;
@@ -67,12 +67,12 @@ color: white;
 }
 
 /*button color reduces opacity when user hovers*/
-.button:hover{
+.startbutton:hover, .button:hover{
     opacity:0.5;
 }
 
 /*button color reduces opacity and has blue border when user clicks*/
-.button:focus{
+.startbutton:focus, .button:focus{
     opacity:0.5;
     box-shadow: 0px 0px 8px
     rgba(9, 159, 204, 0.993), 0px 0px 5px
@@ -88,6 +88,11 @@ color: white;
     color:rgb(165, 159, 159);
 
 
+}
+
+/*styling for answer choice section*/
+#choices{
+    list-style:none;
 }
 
 

@@ -11,18 +11,19 @@
 <body>
 <header>
     <h3 id="highscores">View Highscores</h3>
-    <h3 id="timer">Time:</h3>
+    <h3 id="timer">Time: 0</h3>
 </header>
 
   <main class="initialcontainer">
     <div>
-        <h1>Coding Quiz Challenge</h1>
+        <h1 id="header">Coding Quiz Challenge</h1>
     </div>
     <div>
-        <p>Directions</p>
+        <p id="directions">Try to answer the following code-related questions within the time limit.  Careful, incorrect answers will penalize your score/time by 10 seconds.  Good luck!</p>
+        <ul id="choices"></ul>
     </div>
     <div>
-        <button class="button">Start Quiz</button>
+        <button class="startbutton">Start Quiz</button>
     </div>
     <div id="answer">
        <h3 style="border-top: 2px solid white" data-state="hidden" data-correct="Correct!" data-wrong="Wrong!"></h3> 
