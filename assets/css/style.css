@@ -56,7 +56,7 @@ justify-content:space-between;
 
 
 /*General button styling for all buttons throughout the quiz*/
-.startbutton, .button{
+.startbutton, .answer{
 padding: 5px;
 cursor: pointer;
 font-size: 16px;
@@ -67,12 +67,21 @@ color: white;
 }
 
 /*button color reduces opacity when user hovers*/
-.startbutton:hover, .button:hover{
+.startbutton:hover{
     opacity:0.5;
 }
 
+.answer:hover{
+    opacity:0.5;
+}
 /*button color reduces opacity and has blue border when user clicks*/
-.startbutton:focus, .button:focus{
+.startbutton:focus{
+    opacity:0.5;
+    box-shadow: 0px 0px 8px
+    rgba(9, 159, 204, 0.993), 0px 0px 5px
+    rgba(9, 159, 204,1);
+}
+.answer:focus{
     opacity:0.5;
     box-shadow: 0px 0px 8px
     rgba(9, 159, 204, 0.993), 0px 0px 5px
@@ -84,7 +93,7 @@ color: white;
     margin-top:15px;
     font-size:16px;
     font-style:italic;
-    margin-top:5px;
+    margin-top:10px;
     color:rgb(165, 159, 159);
 
 
