@@ -10,11 +10,10 @@ var timeLeft = 60;
 var playGame = false;
 
 
-
 var Questions = ["Commonly used data types DO NOT include:", "String values must be enclosed within _____ when being assigned to variables."];
 var Answers = ["3. alerts", "3. quotes"];
 var Choices = ["1. strings", "2. booleans", "3. alerts", "4. numbers","1. commas", "2. curly brackets", "3. quotes", "4. parentheses"];
-correctAnswers=0;
+var finalScore = 0;
 var questionNumber = 0;
 var choiceNumber = 0;
 
@@ -40,12 +39,14 @@ function timer(){
     if(timeLeft === 0 || timeLeft<0) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
+      timerEl.textContent = "Timer: ";
       endQuiz();
 
       return;
     }
     else if(!playGame){
       clearInterval(timerInterval);
+      timerEl.textContent = "Timer: ";
 
     }
 
@@ -76,10 +77,11 @@ function renderQuiz(){
 
 //Check quiz question answer
 choicesEl.addEventListener("click", function(event){
+event.stopPropagation();
+
 var selection = event.target.innerText;
 console.log(typeof Answers[questionNumber]);
 if(selection === Answers[questionNumber]){
-  correctAnswers++;
   feedback.setAttribute("style","border-top: 2px solid rgb(165, 159, 159);");
   feedback.textContent="Correct!";
 
@@ -117,8 +119,10 @@ function nextQuestion(){
 
 //Ends the quiz
 function endQuiz(){
+  finalScore = timeLeft;
   headerEl.textContent="Quiz Completed.";
-  directionsEl.textContent="Your final score is " + timeLeft;
+  directionsEl.textContent="Your final score is " + finalScore;
+  timerEl.textContent = "Timer: ";
 
   for(i=0; i<4; i++){
     choicesEl.children[0].remove();
@@ -128,12 +132,34 @@ feedback.textContent="";
 var initials = document.createElement("input");
 initials.setAttribute("type", "text");
 initials.setAttribute("name", "initials");
+initials.setAttribute("id", "initialsInput");
 
-var label = document.createElement("p");
-//label.setAttribute("for", "initials");
-label.textContent("Enter initials:");
+var submit = document.createElement("input");
+submit.setAttribute("id","submit");
+submit.setAttribute("type","submit");
+submit.setAttribute("value","Submit");
 
-//label.appendChild(initials);
+var label = document.createElement("label");
+label.setAttribute("for", "initials");
+label.textContent="Enter initials: ";
+
 userScore.appendChild(label);
+userScore.appendChild(initials);
+userScore.appendChild(submit);
 
 }
+
+//Store user score
+userScore.addEventListener("click", function(event){
+event.preventDefault();
+
+var sendScore = event.target.getAttribute('id');
+if(sendScore= "submit"){
+  
+  var initialInput = document.querySelector("#initialsInput");
+  var userInitialsScore = initialInput.value.trim() + " - " + finalScore;
+  localStorage.setItem("userInitialsScore", userInitialsScore);
+  console.log(localStorage.getItem("userInitialsScore"));
+}
+
+});
