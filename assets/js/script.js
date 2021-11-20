@@ -5,6 +5,7 @@ var timerEl = document.querySelector("#timer");
 var choicesEl = document.querySelector("#choices");
 var main = document.querySelector("main");
 var feedback = document.querySelector("#feedback");
+var userScore = document.querySelector("#userScore");
 var timeLeft = 60;
 var playGame = false;
 
@@ -45,7 +46,6 @@ function timer(){
     }
     else if(!playGame){
       clearInterval(timerInterval);
-      endQuiz();
 
     }
 
@@ -119,5 +119,21 @@ function nextQuestion(){
 function endQuiz(){
   headerEl.textContent="Quiz Completed.";
   directionsEl.textContent="Your final score is " + timeLeft;
+
+  for(i=0; i<4; i++){
+    choicesEl.children[0].remove();
+}
+feedback.setAttribute("style","border-top: 2px solid white;");
+feedback.textContent="";
+var initials = document.createElement("input");
+initials.setAttribute("type", "text");
+initials.setAttribute("name", "initials");
+
+var label = document.createElement("p");
+//label.setAttribute("for", "initials");
+label.textContent("Enter initials:");
+
+//label.appendChild(initials);
+userScore.appendChild(label);
 
 }
