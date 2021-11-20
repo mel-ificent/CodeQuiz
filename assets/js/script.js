@@ -6,6 +6,7 @@ var choicesEl = document.querySelector("#choices");
 var main = document.querySelector("main");
 var feedback = document.querySelector("#feedback");
 var userScore = document.querySelector("#userScore");
+var storedScores = document.querySelector("#storedScores");
 var timeLeft = 60;
 var playGame = false;
 
@@ -16,9 +17,24 @@ var Choices = ["1. strings", "2. booleans", "3. alerts", "4. numbers","1. commas
 var finalScore = 0;
 var questionNumber = 0;
 var choiceNumber = 0;
+var allScores = [];
+
+
+//Get stored scores
+function init(){
+  var storedUserScores = JSON.parse(localStorage.getItem("Scores"));
+
+  // If scores were retrieved from localStorage, update the scores array to it
+  if (storedUserScores !== null) {
+    allScores = storedUserScores;
+  
+  }
+console.log(allScores);
+}
 
 //Use the start button to kick off the quiz
 startbuttonEl.addEventListener("click", function(){
+
 
     directionsEl.textContent="";
     timerEl.textContent = "Timer: " + timeLeft;
@@ -153,13 +169,53 @@ userScore.appendChild(submit);
 userScore.addEventListener("click", function(event){
 event.preventDefault();
 
+feedback.setAttribute("style","border-top: 2px solid white;");
+feedback.textContent="";
+
 var sendScore = event.target.getAttribute('id');
-if(sendScore= "submit"){
+
+
+if(sendScore= "submit" && document.querySelector("#initialsInput").value===""){
+  feedback.setAttribute("style","border-top: 2px solid rgb(165, 159, 159);");
+  feedback.textContent="Enter your initials before proceeding.";
+
+}
+
+else if(sendScore= "submit"){
   
   var initialInput = document.querySelector("#initialsInput");
   var userInitialsScore = initialInput.value.trim() + " - " + finalScore;
-  localStorage.setItem("userInitialsScore", userInitialsScore);
-  console.log(localStorage.getItem("userInitialsScore"));
+  allScores.push(userInitialsScore);
+  localStorage.setItem("Scores", JSON.stringify(allScores));
+  renderScores();
 }
 
 });
+
+
+
+
+  //Display scores
+
+function renderScores(){
+  userScore.children[0].remove();
+  userScore.children[0].remove();
+  userScore.children[0].remove();
+  headerEl.textContent="Highscores";
+  directionsEl.textContent="";
+  timerEl.textContent = "";
+
+
+for (var i = 0; i < allScores.length; i++) {
+  var printScore = allScores[i];
+
+  var li = document.createElement("li");
+  li.textContent = printScore;
+  storedScores.appendChild(li);
+}
+
+
+}
+
+
+init();
