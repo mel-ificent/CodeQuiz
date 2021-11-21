@@ -9,6 +9,7 @@ var userScore = document.querySelector("#userScore");
 var storedScores = document.querySelector("#storedScores");
 var navButton = document.querySelector("#navButton");
 var clearButton = document.querySelector("#clearButton");
+var highscoresEl = document.querySelector("#highscores");
 var timeLeft = 60;
 var playGame = false;
 
@@ -69,7 +70,7 @@ function timer(){
     }
     else if(!playGame){
       clearInterval(timerInterval);
-      timerEl.textContent = "Timer: ";
+      timerEl.textContent = "";
 
     }
 
@@ -213,6 +214,16 @@ function renderScores(){
   headerEl.textContent="Highscores";
   directionsEl.textContent="";
   timerEl.textContent = "";
+  main.setAttribute("class", "playcontainer");
+  startbuttonEl.setAttribute("hidden", true);
+  highscoresEl.textContent="";
+  playGame=false;
+
+if(choicesEl.children[0]!==undefined){
+  for(i=0; i<4; i++){
+    choicesEl.children[0].remove();
+  }
+}
   
   if(document.querySelector("#goBack")=== null){
   var goBack = document.createElement("button");
@@ -255,6 +266,25 @@ clearButton.addEventListener("click", function(event){
 
   renderScores();
   }
+
+});
+
+//Event listener for to go back to the start
+navButton.addEventListener("click", function(event){
+  var element = event.target;
+
+  // Checks if element is a button
+  if (element.matches("button") === true) {
+
+   location.reload();
+  }
+
+});
+
+//Render scores if the user clicks the 'View Highscores' at any time
+highscoresEl.addEventListener("click", function(){
+
+renderScores();
 
 });
 

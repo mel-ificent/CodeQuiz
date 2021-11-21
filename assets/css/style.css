@@ -38,21 +38,6 @@ justify-content:space-between;
 
 }
 
-/*styling of main container when quiz ends*/
-.endcontainer{
-    margin: auto;
-    width: 40%;
-    text-align:left;
-
-}
-
-/*styling of main container when user is reviewing results and high scores*/
-.resultscontainer{
-    margin: auto;
-    width: 40%;
-    text-align:left;
-
-}
 
 
 /*General button styling for all buttons throughout the quiz*/
