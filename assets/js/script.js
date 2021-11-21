@@ -1,4 +1,4 @@
-var startbuttonEl = document.querySelector(".startbutton");
+var startbuttonEl = document.querySelector("#startButton");
 var headerEl = document.querySelector("#header");
 var directionsEl = document.querySelector("#directions");
 var timerEl = document.querySelector("#timer");
@@ -10,20 +10,19 @@ var storedScores = document.querySelector("#storedScores");
 var navButton = document.querySelector("#navButton");
 var clearButton = document.querySelector("#clearButton");
 var highscoresEl = document.querySelector("#highscores");
+
 var timeLeft = 60;
 var playGame = false;
-
-
-var Questions = ["Commonly used data types DO NOT include:", "String values must be enclosed within _____ when being assigned to variables."];
-var Answers = ["3. alerts", "3. quotes"];
-var Choices = ["1. strings", "2. booleans", "3. alerts", "4. numbers","1. commas", "2. curly brackets", "3. quotes", "4. parentheses"];
+var Questions = ["Commonly used data types DO NOT include:", "String values must be enclosed within _____ when being assigned to variables.","The condition in an if / else statement is enclosed within ____", "Arrays in JavaScript can be used to store _____.","A very useful tool used during development and debugging for printing content to the debugger is:"];
+var Answers = ["3. alerts", "3. quotes", "3. parentheses","4. all of the above", "4. console.log"];
+var Choices = ["1. strings", "2. booleans", "3. alerts", "4. numbers","1. commas", "2. curly brackets", "3. quotes", "4. parentheses","1. quotes", "2. curly brackets", "3. parentheses","4. square brackets", "1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above","1. JavaScript", "2. terminal/bash", "3. for loops", "4. console.log"];
 var finalScore = 0;
 var questionNumber = 0;
 var choiceNumber = 0;
 var allScores = [];
 
 
-//Get stored scores
+//When the screen initially loads, get stored scores
 function init(){
   var storedUserScores = JSON.parse(localStorage.getItem("Scores"));
 
@@ -37,10 +36,10 @@ function init(){
   allScores=[];
 
   }
-console.log(document.querySelector("#goBack"));
+
 }
 
-//Use the start button to kick off the quiz
+//Use the start button to kick off the quiz.  This will clear the initial screen values (e.g. play button, directions) and start the timer and quiz rendering
 startbuttonEl.addEventListener("click", function(){
 
 
@@ -60,14 +59,17 @@ function timer(){
     timeLeft--;
     timerEl.textContent = "Timer: " + timeLeft;
 
+    //this if statement checks to see if the clock runs out
     if(timeLeft === 0 || timeLeft<0) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
-      timerEl.textContent = "Timer: ";
+      timerEl.textContent = "";
       endQuiz();
 
       return;
     }
+
+    //this if statement checks to see if the clock should stop because the quiz has been completed
     else if(!playGame){
       clearInterval(timerInterval);
       timerEl.textContent = "";
@@ -78,7 +80,7 @@ function timer(){
     
 }
 
-//Display questions and choices
+//Display first question and choices
 function renderQuiz(){
 
     headerEl.textContent=Questions[questionNumber];
@@ -90,7 +92,7 @@ function renderQuiz(){
         var li = document.createElement("li");
         var button = document.createElement("button");
         button.textContent = answerChoice;
-        button.setAttribute("class","answer");
+        button.setAttribute("class","button");
     
         li.appendChild(button);
        choicesEl.appendChild(li);
@@ -99,23 +101,26 @@ function renderQuiz(){
 
 }
 
-//Check quiz question answer
+//Check quiz question answer once the user clicks on an option
 choicesEl.addEventListener("click", function(event){
 event.stopPropagation();
 
 var selection = event.target.innerText;
-console.log(typeof Answers[questionNumber]);
+
+//display correct or incorrect message based on the user's choice
 if(selection === Answers[questionNumber]){
   feedback.setAttribute("style","border-top: 2px solid rgb(165, 159, 159);");
   feedback.textContent="Correct!";
 
 }
+//if the user answer incorrectly the clock time is penalized by 10
 else{
   feedback.setAttribute("style","border-top: 2px solid rgb(165, 159, 159);");
   feedback.textContent="Wrong!";
   timeLeft = timeLeft - 10;
 }
 questionNumber++;
+//if statement to decide whether there is another question or if the game should end
 if(questionNumber<Questions.length){
   event.target.blur();
   nextQuestion();
@@ -141,7 +146,7 @@ function nextQuestion(){
   }
 }
 
-//Ends the quiz
+//Ends the quiz, displays end of quiz information and removes choice options
 function endQuiz(){
   finalScore = timeLeft;
   headerEl.textContent="Quiz Completed.";
@@ -151,6 +156,8 @@ function endQuiz(){
   for(i=0; i<4; i++){
     choicesEl.children[0].remove();
 }
+
+//Adds a form for the user to add their initials for the scores page
 feedback.setAttribute("style","border-top: 2px solid white;");
 feedback.textContent="";
 var initials = document.createElement("input");
@@ -160,6 +167,7 @@ initials.setAttribute("id", "initialsInput");
 
 var submit = document.createElement("input");
 submit.setAttribute("id","submit");
+submit.setAttribute("class","button");
 submit.setAttribute("type","submit");
 submit.setAttribute("value","Submit");
 
@@ -173,7 +181,7 @@ userScore.appendChild(submit);
 
 }
 
-//Store user score
+//Stores user score when the user clicks submit on the form
 userScore.addEventListener("click", function(event){
 event.preventDefault();
 
@@ -183,7 +191,7 @@ feedback.textContent="";
 var sendScore = event.target;
 
 // Checks if element is the submit button
-
+//Adds an error message if the user does not enter their initials
 if(sendScore.getAttribute("value")==="Submit" && document.querySelector("#initialsInput").value===""){
   feedback.setAttribute("style","border-top: 2px solid rgb(165, 159, 159);");
   feedback.textContent="Enter your initials before proceeding.";
@@ -191,6 +199,7 @@ if(sendScore.getAttribute("value")==="Submit" && document.querySelector("#initia
 
 }
 
+//if the user submits their initials, it gets concatenated with the score and stored in the allScores array which is added to local storage
 else if(sendScore.getAttribute("value")==="Submit"){
   
   var initialInput = document.querySelector("#initialsInput");
@@ -205,7 +214,8 @@ else if(sendScore.getAttribute("value")==="Submit"){
 
 
 
-  //Display scores
+  //removes unnecessary fields (e.g. initials form, choices, buttons, etc) 
+  
 
 function renderScores(){
   if(userScore.children[0]!==undefined){
@@ -227,19 +237,22 @@ if(choicesEl.children[0]!==undefined){
   }
 }
   
+//also adds the 'go back' and 'clear scores' buttons if needed
   if(document.querySelector("#goBack")=== null){
   var goBack = document.createElement("button");
   goBack.textContent = "Go Back";
   goBack.setAttribute("id","goBack");
+  goBack.setAttribute("class","button");
 
   var clearScores = document.createElement("button");
   clearScores.textContent = "Clear Scores";
   clearScores.setAttribute("id","clearScores");
+  clearScores.setAttribute("class","button");
 
  navButton.appendChild(goBack);
  clearButton.appendChild(clearScores);
 }
-
+//then prints each user and score saved in the local storage
 for (var i = 0; i < allScores.length; i++) {
   var printScore = allScores[i];
 
@@ -251,11 +264,11 @@ for (var i = 0; i < allScores.length; i++) {
 
 }
 
-//Event listener for clearing the scores table
+//Event listener for if the user clicks the 'Clear Scores" button
 clearButton.addEventListener("click", function(event){
   var element = event.target;
 
-  // Checks if element is a button
+  // Checks if the clicked element is a button, if so then the scores array, values on the screen, and local storage is all cleared
   if (element.matches("button") === true) {
 
     for (var i = 0; i < allScores.length; i++) {
@@ -271,11 +284,11 @@ clearButton.addEventListener("click", function(event){
 
 });
 
-//Event listener for to go back to the start
+//Event listener for to go back to the starting page
 navButton.addEventListener("click", function(event){
   var element = event.target;
 
-  // Checks if element is a button
+  // Checks if element clicked is a button, if so the page will be reloaded which will bring the user back to the start
   if (element.matches("button") === true) {
 
    location.reload();
@@ -283,7 +296,7 @@ navButton.addEventListener("click", function(event){
 
 });
 
-//Render scores if the user clicks the 'View Highscores' at any time
+//Render scores if the user clicks the 'View Highscores' at the top of the page at any time
 highscoresEl.addEventListener("click", function(){
 
 renderScores();

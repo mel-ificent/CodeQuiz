@@ -22,7 +22,7 @@ justify-content:space-between;
     font-size:16px;
 }
 
-/*styling of main container when screen initially loads*/
+/*styling of main container when screen initially loads, items are centered*/
 .initialcontainer{
     margin: auto;
     width: 40%;
@@ -30,7 +30,7 @@ justify-content:space-between;
 
 }
 
-/*styling of main container when quiz is in progress*/
+/*styling of main container when quiz is in progress, items are left justified*/
 .playcontainer{
     margin: auto;
     width: 40%;
@@ -41,7 +41,7 @@ justify-content:space-between;
 
 
 /*General button styling for all buttons throughout the quiz*/
-.startbutton, .answer, #submit, #goBack, #clearScores{
+.button{
 padding: 5px;
 cursor: pointer;
 font-size: 16px;
@@ -52,59 +52,18 @@ color: white;
 }
 
 /*button color reduces opacity when user hovers*/
-.startbutton:hover{
+.button:hover{
     opacity:0.5;
 }
 
-.answer:hover{
-    opacity:0.5;
-}
-
-#submit:hover{
-    opacity:0.5;
-}
-
-#goBack:hover{
-    opacity:0.5;
-}
-
-#clearScores:hover{
-    opacity:0.5;
-}
 /*button color reduces opacity and has blue border when user clicks*/
-.startbutton:focus{
-    opacity:0.5;
-    box-shadow: 0px 0px 8px
-    rgba(9, 159, 204, 0.993), 0px 0px 5px
-    rgba(9, 159, 204,1);
-}
-.answer:focus{
+.button:focus{
     opacity:0.5;
     box-shadow: 0px 0px 8px
     rgba(9, 159, 204, 0.993), 0px 0px 5px
     rgba(9, 159, 204,1);
 }
 
-#submit:focus{
-    opacity:0.5;
-    box-shadow: 0px 0px 8px
-    rgba(9, 159, 204, 0.993), 0px 0px 5px
-    rgba(9, 159, 204,1);
-}
-
-#goBack:focus{
-    opacity:0.5;
-    box-shadow: 0px 0px 8px
-    rgba(9, 159, 204, 0.993), 0px 0px 5px
-    rgba(9, 159, 204,1);
-}
-
-#clearScores:focus{
-    opacity:0.5;
-    box-shadow: 0px 0px 8px
-    rgba(9, 159, 204, 0.993), 0px 0px 5px
-    rgba(9, 159, 204,1);
-}
 /*styling for feedback to user if they answer a question correctly or incorrectly*/
 #answer{
     margin-top:15px;
@@ -116,10 +75,20 @@ color: white;
 
 }
 
-/*styling for answer choice section*/
+/*styling for answer choice section to remove bullets*/
 #choices{
     list-style:none;
 }
 
 
+/*background color and border for scores */
+#storedScores {
+    background-color:#c8a9d6;
 
+    
+    
+}
+#storedScores li {
+   border-top: 1px solid white;
+    
+}
