@@ -146,7 +146,7 @@ function endQuiz(){
   finalScore = timeLeft;
   headerEl.textContent="Quiz Completed.";
   directionsEl.textContent="Your final score is " + finalScore;
-  timerEl.textContent = "Timer: ";
+  timerEl.textContent = "";
 
   for(i=0; i<4; i++){
     choicesEl.children[0].remove();
@@ -180,16 +180,18 @@ event.preventDefault();
 feedback.setAttribute("style","border-top: 2px solid white;");
 feedback.textContent="";
 
-var sendScore = event.target.getAttribute('id');
+var sendScore = event.target;
 
+// Checks if element is the submit button
 
-if(sendScore= "submit" && document.querySelector("#initialsInput").value===""){
+if(sendScore.getAttribute("value")==="Submit" && document.querySelector("#initialsInput").value===""){
   feedback.setAttribute("style","border-top: 2px solid rgb(165, 159, 159);");
   feedback.textContent="Enter your initials before proceeding.";
 
+
 }
 
-else if(sendScore= "submit"){
+else if(sendScore.getAttribute("value")==="Submit"){
   
   var initialInput = document.querySelector("#initialsInput");
   var userInitialsScore = initialInput.value.trim() + " - " + finalScore;
