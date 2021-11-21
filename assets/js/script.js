@@ -7,6 +7,8 @@ var main = document.querySelector("main");
 var feedback = document.querySelector("#feedback");
 var userScore = document.querySelector("#userScore");
 var storedScores = document.querySelector("#storedScores");
+var navButton = document.querySelector("#navButton");
+var clearButton = document.querySelector("#clearButton");
 var timeLeft = 60;
 var playGame = false;
 
@@ -29,7 +31,12 @@ function init(){
     allScores = storedUserScores;
   
   }
-console.log(allScores);
+
+  else{
+  allScores=[];
+
+  }
+console.log(document.querySelector("#goBack"));
 }
 
 //Use the start button to kick off the quiz
@@ -198,13 +205,27 @@ else if(sendScore= "submit"){
   //Display scores
 
 function renderScores(){
+  if(userScore.children[0]!==undefined){
   userScore.children[0].remove();
   userScore.children[0].remove();
   userScore.children[0].remove();
+  }
   headerEl.textContent="Highscores";
   directionsEl.textContent="";
   timerEl.textContent = "";
+  
+  if(document.querySelector("#goBack")=== null){
+  var goBack = document.createElement("button");
+  goBack.textContent = "Go Back";
+  goBack.setAttribute("id","goBack");
 
+  var clearScores = document.createElement("button");
+  clearScores.textContent = "Clear Scores";
+  clearScores.setAttribute("id","clearScores");
+
+ navButton.appendChild(goBack);
+ clearButton.appendChild(clearScores);
+}
 
 for (var i = 0; i < allScores.length; i++) {
   var printScore = allScores[i];
@@ -217,5 +238,24 @@ for (var i = 0; i < allScores.length; i++) {
 
 }
 
+//Event listener for clearing the scores table
+clearButton.addEventListener("click", function(event){
+  var element = event.target;
+
+  // Checks if element is a button
+  if (element.matches("button") === true) {
+
+    for (var i = 0; i < allScores.length; i++) {
+    
+      storedScores.children[0].remove();
+    }
+      
+  localStorage.clear();
+  allScores = [];
+
+  renderScores();
+  }
+
+});
 
 init();
